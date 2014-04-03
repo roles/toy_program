@@ -4,6 +4,7 @@
 #include<iostream>
 #include<string>
 #include<cctype>
+#include<sstream>
 #include<map>
 
 using namespace std;
