@@ -1,0 +1,8 @@
+Install qt:
+    sudo apt-get install qtcreator
+
+Compiling the graphics server is (in the usual Qt way) a two-step process:
+In subdirectory gserv/ the command
+   qmake-qt4 gserv.pro -r -spec linux-g++
+will create a custom Makefile, then typing 
+   make
