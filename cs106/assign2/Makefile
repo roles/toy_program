@@ -1,0 +1,18 @@
+CC=g++
+CS106LIB=../lib/cs106lib.a
+LDFLAGS=-lm
+CPPFLAGS=-g -I../include -std=c++0x
+VPATH=../include ../lib
+PROG=partA partB
+
+all: $(PROG)
+
+$(PROG): % : %.o $(CS106LIB)
+	$(CC) $+ $(LDFLAGS) -o $@
+
+partB: partB.o maze.o $(CS106LIB)
+	$(CC) $+ $(LDFLAGS) -o $@
+
+.PHONY: clean
+clean:
+	rm -f *.o $(PROG)
