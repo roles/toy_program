@@ -7,11 +7,8 @@ PROG=partA partB
 
 all: $(PROG)
 
-$(PROG): % : %.o $(CS106LIB)
-	$(CC) $+ $(LDFLAGS) -o $@
-
-partB: partB.o maze.o $(CS106LIB)
-	$(CC) $+ $(LDFLAGS) -o $@
+$(PROG): % : %.o maze.o $(CS106LIB)
+	$(CC) $^ $(LDFLAGS) -o $@
 
 .PHONY: clean
 clean:
