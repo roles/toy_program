@@ -10,6 +10,6 @@ all: $(PROG)
 $(PROG): % : %.o maze.o $(CS106LIB)
 	$(CC) $^ $(LDFLAGS) -o $@
 
-.PHONY: clean
+.PHONY: clean all
 clean:
 	rm -f *.o $(PROG)

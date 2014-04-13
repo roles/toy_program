@@ -15,7 +15,9 @@ void readInput(int& numVoter, double& diffPer, double& errPer){
 
 void getCanNum(const int& numVoter, const double& diffPer, 
                int& numCanA, int& numCanB){
-    numCanA = (1 + diffPer) / 2 * numVoter;
+    //numCanA = (1 + diffPer) / 2 * numVoter;
+    //numCanB = numVoter - numCanA;
+    numCanA = (0.5 + diffPer) * numVoter;
     numCanB = numVoter - numCanA;
 }
 
