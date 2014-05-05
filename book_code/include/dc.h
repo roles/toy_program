@@ -7,9 +7,10 @@
 #include<sstream>
 #include<map>
 
-using namespace std;
-
-
+using std::string;
+using std::ostream;
+using std::istream;
+using std::map;
 
 namespace Lexer{
     /*
@@ -59,33 +60,27 @@ namespace Lexer{
             Token ct;                   //current token
     };
 
-    Token_stream ts{cin};
+    extern Token_stream ts;
 }
 
 
 namespace Error{
     double error(const string &s);
-    int no_of_errors;
+    extern int no_of_errors;
 }
 
 namespace Table{
-    map<string, double> table;
+    extern map<string, double> table;
 }
 
 namespace Parser{
-    double expr(bool);
+    double prim(bool);
     double term(bool);
     double expr(bool);
-
-    using namespace Lexer;
-    using Error::error;
-    using Table::table;
 }
 
 namespace Dirver{
     void calculate();
-
-    using Parser::expr;             //在这里声明的在Driver::calculate的定义中可以看到
 }
 
 #endif

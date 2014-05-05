@@ -179,8 +179,8 @@ int main(){
     //testCountWays();
     //testDrawRuler();
     //testCountCriticalVotes(); 
-    //testListCompletions();
-    testSolvable();
+    testListCompletions();
+    //testSolvable();
 
     return 0;
 }
