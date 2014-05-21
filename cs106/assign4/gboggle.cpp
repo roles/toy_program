@@ -51,15 +51,15 @@ const int WORD_FONT_SIZE = 10;
 struct rectT { double x, y, w, h; };
 
 static struct {
-	int numWords[2];		// num words currently displayed for each player
-	int scores[2];			// scores for each player
-	rectT scoreBox[2];		// rectangle enscribing the label + score for each player
-	double wordColumnWidth;	// width of word list columns
-	double cubeSize;		// size of cube
-	double cubeFontSize;	// font size used for labelling cubes
-	rectT board;			// rectangle enscribed the cubes w/ border
-	int numRows, numCols;	// dimensions of cube layout on board
-	char letters[MAX_DIMENSION][MAX_DIMENSION];
+    int numWords[2];		// num words currently displayed for each player
+    int scores[2];			// scores for each player
+    rectT scoreBox[2];		// rectangle enscribing the label + score for each player
+    double wordColumnWidth;	// width of word list columns
+    double cubeSize;		// size of cube
+    double cubeFontSize;	// font size used for labelling cubes
+    rectT board;			// rectangle enscribed the cubes w/ border
+    int numRows, numCols;	// dimensions of cube layout on board
+    char letters[MAX_DIMENSION][MAX_DIMENSION];
 } gState;
 
 
@@ -97,18 +97,18 @@ static void CalculateGeometry(int numRows, int numCols);
  */
 void DrawBoard(int numRows, int numCols)
 {
-	if (numRows < 0 || numRows > MAX_DIMENSION || numCols < 0 || numCols > MAX_DIMENSION)
-		Error("DrawBoard called with invalid dimensions.");
+    if (numRows < 0 || numRows > MAX_DIMENSION || numCols < 0 || numCols > MAX_DIMENSION)
+	Error("DrawBoard called with invalid dimensions.");
 		
-	SetWindowTitle("Welcome to Boggle!");
-	InitColors();
-	CalculateGeometry(numRows, numCols);
+    SetWindowTitle("Welcome to Boggle!");
+    InitColors();
+    CalculateGeometry(numRows, numCols);
 	
-			// Draws a filled rect underneath cubes in the oh-so-familiar yellow color
-	FillBox(gState.board.x, gState.board.y, gState.board.w, gState.board.h, 0.5, "Board Color");
-	DrawEmptyCubes();
-	DrawPlayerLabel(Human, "Me");
-	DrawPlayerLabel(Computer, "Computer");
+    // Draws a filled rect underneath cubes in the oh-so-familiar yellow color
+    FillBox(gState.board.x, gState.board.y, gState.board.w, gState.board.h, 0.5, "Board Color");
+    DrawEmptyCubes();
+    DrawPlayerLabel(Human, "Me");
+    DrawPlayerLabel(Computer, "Computer");
 }
 
 
@@ -122,10 +122,10 @@ void DrawBoard(int numRows, int numCols)
  */ 
 void LabelCube(int row, int col, char letter)
 {
-	if (row < 0 || row >= gState.numRows || col < 0 || col >= gState.numCols)
-		Error("LabelCube called with invalid row, col arguments.");
-	gState.letters[row][col] = letter;
-	DrawCube(row, col, letter, false);
+    if (row < 0 || row >= gState.numRows || col < 0 || col >= gState.numCols)
+	Error("LabelCube called with invalid row, col arguments.");
+    gState.letters[row][col] = letter;
+    DrawCube(row, col, letter, false);
 }
 
 
@@ -137,9 +137,9 @@ void LabelCube(int row, int col, char letter)
  */ 
 void HighlightCube(int row, int col, bool flag)
 {
-	if (row < 0 || row >= gState.numRows || col < 0 || col >= gState.numCols)
-		Error("LabelCube called with invalid row, col arguments.");
-	DrawCube(row, col, gState.letters[row][col], flag);
+    if (row < 0 || row >= gState.numRows || col < 0 || col >= gState.numCols)
+	Error("LabelCube called with invalid row, col arguments.");
+    DrawCube(row, col, gState.letters[row][col], flag);
 }
 
 
@@ -153,9 +153,9 @@ void HighlightCube(int row, int col, bool flag)
  */
 static void DrawEmptyCubes()
 {
-	for (int row = 0; row < gState.numRows; row++) 
-		for (int col = 0; col < gState.numCols; col++) 
-    		DrawCube(row, col, ' ', false);	// erase all cubes, start with blank chars
+    for (int row = 0; row < gState.numRows; row++) 
+	for (int col = 0; col < gState.numCols; col++) 
+	    DrawCube(row, col, ' ', false);	// erase all cubes, start with blank chars
 }
 
 
@@ -167,10 +167,10 @@ static void DrawEmptyCubes()
  */
 static void DrawCube(int row, int col, char ch, bool invert)
 {
-	DrawAndFillRoundedRect(CubeX(col), CubeY(row), gState.cubeSize, gState.cubeSize, 
-						gState.cubeSize/5.0, 1.0, (invert ? "Letter Color" : "Die Color"));
+    DrawAndFillRoundedRect(CubeX(col), CubeY(row), gState.cubeSize, gState.cubeSize, 
+			   gState.cubeSize/5.0, 1.0, (invert ? "Letter Color" : "Die Color"));
     SetPenColor((invert ? "Die Color" : "Letter Color"));						
-	DrawCenteredChar(CubeX(col) + gState.cubeSize/2.0, CubeY(row) + gState.cubeSize/2.0, ch);
+    DrawCenteredChar(CubeX(col) + gState.cubeSize/2.0, CubeY(row) + gState.cubeSize/2.0, ch);
 }
 
 
@@ -183,14 +183,14 @@ static void DrawCube(int row, int col, char ch, bool invert)
  */
 static void DrawPlayerLabel(playerT player, string name)
 {
-	SetPenColor("Label Color");
-	MovePen(gState.scoreBox[player].x, gState.scoreBox[player].y);
-	DrawLine(gState.scoreBox[player].w , 0);
-	SetFont(SCORE_FONT);
-	SetPointSize(SCORE_FONT_SIZE);
-	MovePen(gState.scoreBox[player].x, gState.scoreBox[player].y + GetFontDescent());
-	DrawTextString(name);
-	gState.scores[player] = gState.numWords[player] = 0;
+    SetPenColor("Label Color");
+    MovePen(gState.scoreBox[player].x, gState.scoreBox[player].y);
+    DrawLine(gState.scoreBox[player].w , 0);
+    SetFont(SCORE_FONT);
+    SetPointSize(SCORE_FONT_SIZE);
+    MovePen(gState.scoreBox[player].x, gState.scoreBox[player].y + GetFontDescent());
+    DrawTextString(name);
+    gState.scores[player] = gState.numWords[player] = 0;
 }
 
 
@@ -202,13 +202,14 @@ static void DrawPlayerLabel(playerT player, string name)
  */
 static void DrawOneScore(playerT playerNum, int value)
 {   
-   	SetFont(SCORE_FONT);
-   	SetPointSize(SCORE_FONT_SIZE);
-	SetPenColor("Label Color");
-	string str = IntegerToString(value);
-   	MovePen(gState.scoreBox[playerNum].x + gState.scoreBox[playerNum].w - TextStringWidth(str), 
-   			gState.scoreBox[playerNum].y + GetFontDescent());
-	DrawTextString(str);
+    SetFont(SCORE_FONT);
+    SetPointSize(SCORE_FONT_SIZE);
+    SetPenColor("Label Color");
+    string str = IntegerToString(value);
+    MovePen(gState.scoreBox[playerNum].x + gState.scoreBox[playerNum].w - TextStringWidth(str), 
+	    gState.scoreBox[playerNum].y + GetFontDescent() + 0.03); // the 0.03 hack added Sept-2011
+    // Using SetEraseMode() to delete old score interfered with the line underneath
+    DrawTextString(str);
 }
 
 /* 
@@ -219,12 +220,12 @@ static void DrawOneScore(playerT playerNum, int value)
  */
 static void EraseOldScore(playerT playerNum, int value)
 {   
-   	SetFont(SCORE_FONT);
-   	SetPointSize(SCORE_FONT_SIZE);
-	string str = IntegerToString(value);
-	FillBox(gState.scoreBox[playerNum].x + gState.scoreBox[playerNum].w - TextStringWidth(str), 
-			gState.scoreBox[playerNum].y + GetFontDescent(),
-			TextStringWidth(str), GetFontAscent(), 1.0, "White");
+    SetFont(SCORE_FONT);
+    SetPointSize(SCORE_FONT_SIZE);
+    string str = IntegerToString(value);
+    FillBox(gState.scoreBox[playerNum].x + gState.scoreBox[playerNum].w - TextStringWidth(str), 
+	    gState.scoreBox[playerNum].y + GetFontDescent(),
+	    TextStringWidth(str), GetFontAscent(), 1.0, "blue");
 }
 
 /* 
@@ -237,8 +238,16 @@ static void EraseOldScore(playerT playerNum, int value)
  */
 static void AddToScoreForPlayer(int pointsToAdd, playerT playerNum)
 {
-	EraseOldScore(playerNum, gState.scores[playerNum]); // erase old score
-	gState.scores[playerNum] += pointsToAdd;
+    /* Changed Sept-2011
+       EraseOldScore() didn't work correctly on Linux (unclear why!)
+       However, SetEraseMode() now works for text without leaving cruft,
+       so let's go back to that method.
+    */
+    //EraseOldScore(playerNum, gState.scores[playerNum]); // erase old score
+    SetEraseMode(true);
+    DrawOneScore(playerNum, gState.scores[playerNum]);
+    SetEraseMode(false);
+    gState.scores[playerNum] += pointsToAdd;
     DrawOneScore(playerNum, gState.scores[playerNum]); // re-draw new score
 }
 
@@ -254,17 +263,17 @@ static void AddToScoreForPlayer(int pointsToAdd, playerT playerNum)
  */
 void RecordWordForPlayer(string word, playerT player)
 {
-	if (player != Human && player != Computer)
-		Error("RecordWordForPlayer called with invalid player argument.");
-	word = ConvertToLowerCase(word);
+    if (player != Human && player != Computer)
+	Error("RecordWordForPlayer called with invalid player argument.");
+    word = ConvertToLowerCase(word);
     SetFont(WORD_FONT);
-	SetPointSize(WORD_FONT_SIZE);
-	SetPenColor("Word Color");
-	int numWordsInRow = gState.scoreBox[player].w/gState.wordColumnWidth;
-	int row = gState.numWords[player] / numWordsInRow;
-	int col = gState.numWords[player] % numWordsInRow;
-   	MovePen(gState.scoreBox[player].x + col*gState.wordColumnWidth, 
-   			gState.scoreBox[player].y -(row+1)*GetFontHeight());
+    SetPointSize(WORD_FONT_SIZE);
+    SetPenColor("Word Color");
+    int numWordsInRow = gState.scoreBox[player].w/gState.wordColumnWidth;
+    int row = gState.numWords[player] / numWordsInRow;
+    int col = gState.numWords[player] % numWordsInRow;
+    MovePen(gState.scoreBox[player].x + col*gState.wordColumnWidth, 
+	    gState.scoreBox[player].y -(row+1)*GetFontHeight());
     DrawTextString(word);
     gState.numWords[player]++;
     AddToScoreForPlayer(word.length() - 3, player); // +1 pt for each letter over length 4
@@ -275,27 +284,27 @@ void RecordWordForPlayer(string word, playerT player)
 // Color table of named colors and their RGB components.  We will init the table once
 // and define colors with those names so we can access colors by name later.
 static struct {
-	char *colorName;
-	double red, green, blue;
+    char *colorName;
+    double red, green, blue;
 } colorTable[] = {
-	{"Board Color",	 1, .86, 0.05}, // yellow-orange
-	{"Die Color",  	.9, .9, .9},	// almost white
-	{"Letter Color", .01, .20, .85},// dark blue
-	{"Word Color", .01, .50, .30},	// med green-blue
-	{"Label Color",	.01, .45, .25},	// dark green-blue
+    {"Board Color",	 1, .86, 0.05}, // yellow-orange
+    {"Die Color",  	.9, .9, .9},	// almost white
+    {"Letter Color", .01, .20, .85},// dark blue
+    {"Word Color", .01, .50, .30},	// med green-blue
+    {"Label Color",	.01, .45, .25},	// dark green-blue
 }; 
 
 static void InitColors()
 {
-	static bool beenHere = false;
+    static bool beenHere = false;
      
-	if (beenHere) return; // Only want to do this once
-  	beenHere = true;
-	for (int i = 0; i < sizeof(colorTable)/sizeof(colorTable[0]); i++)
-		DefineColor(colorTable[i].colorName, 
-   					colorTable[i].red,
-   					colorTable[i].green, 
-   					colorTable[i].blue);
+    if (beenHere) return; // Only want to do this once
+    beenHere = true;
+    for (int i = 0; i < sizeof(colorTable)/sizeof(colorTable[0]); i++)
+	DefineColor(colorTable[i].colorName, 
+		    colorTable[i].red,
+		    colorTable[i].green, 
+		    colorTable[i].blue);
 }
 
 
@@ -306,12 +315,12 @@ static void InitColors()
 
 static double CubeX(int col)
 {
-	return gState.board.x + BOARD_BORDER/2.0 + gState.cubeSize*col;
+    return gState.board.x + BOARD_BORDER/2.0 + gState.cubeSize*col;
 }
 
 static double CubeY(int row)
 {
-	 return gState.board.y + gState.board.h - BOARD_BORDER/2.0 - gState.cubeSize*(row+1);
+    return gState.board.y + gState.board.h - BOARD_BORDER/2.0 - gState.cubeSize*(row+1);
 }
  
 /* Function: CalculateGeometry
@@ -321,30 +330,30 @@ static double CubeY(int row)
  */
 static void CalculateGeometry(int numRows, int numCols)
 {	
-	double boardSize = min(min(GetWindowWidth()/3, GetWindowHeight() - LABEL_HEIGHT), 2.7);
-	gState.cubeSize = min((boardSize-BOARD_BORDER)/numRows, (boardSize-BOARD_BORDER)/numCols);
-	gState.board.w = gState.board.h = boardSize;
-	gState.board.y = GetWindowHeight() - LABEL_HEIGHT - gState.board.h;
-	double leftover = GetWindowWidth() - gState.board.w - 2*INDENT;
-	gState.scoreBox[Human].x = INDENT;
-	gState.scoreBox[Human].y = gState.scoreBox[Computer].y = gState.board.y + gState.board.h;
-	gState.scoreBox[Human].h = gState.scoreBox[Computer].h = LABEL_HEIGHT;
-	gState.scoreBox[Human].w = leftover*HUMAN_PERCENTAGE;
-	gState.board.x = gState.scoreBox[Human].x + gState.scoreBox[Human].w;
-	gState.scoreBox[Computer].x = gState.board.x + gState.board.w + INDENT;
-	gState.scoreBox[Computer].w = GetWindowWidth() - gState.scoreBox[Computer].x - INDENT;
-	gState.numRows = numRows;
-	gState.numCols = numCols;
-	SetFont(WORD_FONT);
-	SetPointSize(WORD_FONT_SIZE);
-	gState.wordColumnWidth = TextStringWidth("mmmmm");	// col size is 5 letters wide
-	SetFont(CUBE_FONT);
-	// iterate to find largest font that fits within given percentage
- 	for (gState.cubeFontSize = 8; gState.cubeFontSize < 48; gState.cubeFontSize++) {
- 		SetPointSize(gState.cubeFontSize);
- 		if ((TextStringWidth("M") > FONT_PERCENTAGE*gState.cubeSize) || 
- 			(GetFontAscent() > FONT_PERCENTAGE*gState.cubeSize)) break;
-	}
+    double boardSize = min(min(GetWindowWidth()/3, GetWindowHeight() - LABEL_HEIGHT), 2.7);
+    gState.cubeSize = min((boardSize-BOARD_BORDER)/numRows, (boardSize-BOARD_BORDER)/numCols);
+    gState.board.w = gState.board.h = boardSize;
+    gState.board.y = GetWindowHeight() - LABEL_HEIGHT - gState.board.h;
+    double leftover = GetWindowWidth() - gState.board.w - 2*INDENT;
+    gState.scoreBox[Human].x = INDENT;
+    gState.scoreBox[Human].y = gState.scoreBox[Computer].y = gState.board.y + gState.board.h;
+    gState.scoreBox[Human].h = gState.scoreBox[Computer].h = LABEL_HEIGHT;
+    gState.scoreBox[Human].w = leftover*HUMAN_PERCENTAGE;
+    gState.board.x = gState.scoreBox[Human].x + gState.scoreBox[Human].w;
+    gState.scoreBox[Computer].x = gState.board.x + gState.board.w + INDENT;
+    gState.scoreBox[Computer].w = GetWindowWidth() - gState.scoreBox[Computer].x - INDENT;
+    gState.numRows = numRows;
+    gState.numCols = numCols;
+    SetFont(WORD_FONT);
+    SetPointSize(WORD_FONT_SIZE);
+    gState.wordColumnWidth = TextStringWidth("mmmmm");	// col size is 5 letters wide
+    SetFont(CUBE_FONT);
+    // iterate to find largest font that fits within given percentage
+    for (gState.cubeFontSize = 8; gState.cubeFontSize < 48; gState.cubeFontSize++) {
+	SetPointSize(gState.cubeFontSize);
+	if ((TextStringWidth("M") > FONT_PERCENTAGE*gState.cubeSize) || 
+	    (GetFontAscent() > FONT_PERCENTAGE*gState.cubeSize)) break;
+    }
 }
  
 /* 
@@ -356,11 +365,11 @@ static void CalculateGeometry(int numRows, int numCols)
  */ 
 static void DrawCenteredChar(double centerX, double centerY, char ch)
 {
-	string s(1, ch);
-  	SetFont(CUBE_FONT);
- 	SetPointSize(gState.cubeFontSize);
-	MovePen(centerX - TextStringWidth(s)/2, centerY - GetFontAscent()/2);
-	DrawTextString(s);
+    string s(1, ch);
+    SetFont(CUBE_FONT);
+    SetPointSize(gState.cubeFontSize);
+    MovePen(centerX - TextStringWidth(s)/2, centerY - GetFontAscent()/2);
+    DrawTextString(s);
 }
 
 
@@ -373,52 +382,52 @@ static void DrawCenteredChar(double centerX, double centerY, char ch)
 
 static void DrawBox(double x, double y, double width, double height)
 {
-	MovePen(x, y);
-	DrawLine(width,0);
-	DrawLine(0,height);
-	DrawLine(-width,0);
-	DrawLine(0,-height);
+    MovePen(x, y);
+    DrawLine(width,0);
+    DrawLine(0,height);
+    DrawLine(-width,0);
+    DrawLine(0,-height);
 }
 
 static void FillBox(double x, double y, double width, double height,
                     double fill, string color)
 {
-	SetPenColor(color);
-	StartFilledRegion(fill);
-	DrawBox(x, y, width, height);
-	EndFilledRegion();
+    SetPenColor(color);
+    StartFilledRegion(fill);
+    DrawBox(x, y, width, height);
+    EndFilledRegion();
 }
 
 
 static void DrawRoundedRect (double x, double y, double width, double height, double radius)
 {
-	MovePen(x + radius, y);
-	DrawLine(width -2*radius,0);		// line across bottom
-	DrawArc(radius,270,90);				// arc on lower right corner
-	DrawLine(0,height -2*radius);		// line up right side
-	DrawArc(radius,0,90);				// arc on upper right corner
-	DrawLine(-(width -2*radius), 0);	// line across top
-	DrawArc(radius,90,90);				// arc on upper left corner
-	DrawLine(0,-(height-2*radius));		// line down left side
-	DrawArc(radius,180,90);				// arc on lower left corner
+    MovePen(x + radius, y);
+    DrawLine(width -2*radius,0);		// line across bottom
+    DrawArc(radius,270,90);				// arc on lower right corner
+    DrawLine(0,height -2*radius);		// line up right side
+    DrawArc(radius,0,90);				// arc on upper right corner
+    DrawLine(-(width -2*radius), 0);	// line across top
+    DrawArc(radius,90,90);				// arc on upper left corner
+    DrawLine(0,-(height-2*radius));		// line down left side
+    DrawArc(radius,180,90);				// arc on lower left corner
 }
 
 
 static void FillRoundedRect (double x, double y, double width, double height,
                              double radius, double fill, string color)
 {
-	SetPenColor(color);
-	StartFilledRegion(fill);
-	DrawRoundedRect(x,y,width, height, radius);
-	EndFilledRegion();
+    SetPenColor(color);
+    StartFilledRegion(fill);
+    DrawRoundedRect(x,y,width, height, radius);
+    EndFilledRegion();
 }
 
 
 static void DrawAndFillRoundedRect (double x, double y, double width, double height,
                                     double radius, double fill, string color)
 {
-	FillRoundedRect(x, y,width, height, radius, fill, color);
-	SetPenColor("Black");
-	DrawRoundedRect(x, y, width, height, radius);
+    FillRoundedRect(x, y,width, height, radius, fill, color);
+    SetPenColor("Black");
+    DrawRoundedRect(x, y, width, height, radius);
 }
 
